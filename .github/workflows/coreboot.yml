@@ -1,0 +1,44 @@
+name: coreboot-qemu
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-boot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential bison flex libncurses-dev libssl-dev \
+            python3 gcc-multilib g++-multilib qemu-system-x86
+
+      - name: Clone coreboot source
+        run: git clone --depth 1 https://github.com/coreboot/coreboot.git coreboot-src
+
+      - name: Configure (QEMU i440fx)
+        working-directory: coreboot-src
+        run: |
+          cp configs/config.emulation_qemu_i440fx .config
+          make olddefconfig
+
+      - name: Build coreboot
+        working-directory: coreboot-src
+        run: make -j$(nproc) IGNORE_CROSSGCC=1
+
+      - name: Boot coreboot in QEMU
+        run: |
+          ls -lh coreboot-src/build/coreboot.rom
+          timeout 120 qemu-system-x86_64 -nographic -serial mon:stdio \
+            -bios coreboot-src/build/coreboot.rom 2>&1 | tee qemu.log || true
+          if grep -q "coreboot-" qemu.log; then
+            echo "BOOT_OK: coreboot banner detected"
+          else
+            echo "BOOT_FAIL: no coreboot banner"
+            tail -60 qemu.log
+            exit 1
+          fi
