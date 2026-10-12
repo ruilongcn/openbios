@@ -15,7 +15,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential bison flex libncurses-dev libssl-dev \
-            python3 gcc-multilib g++-multilib qemu-system-x86
+            python3 gcc-multilib g++-multilib acpica-tools qemu-system-x86
 
       - name: Clone coreboot source
         run: git clone --depth 1 https://github.com/coreboot/coreboot.git coreboot-src
@@ -24,11 +24,12 @@ jobs:
         working-directory: coreboot-src
         run: |
           cp configs/config.emulation_qemu_x86_i440fx .config
+          echo "CONFIG_ANY_TOOLCHAIN=y" >> .config
           make olddefconfig
 
       - name: Build coreboot
         working-directory: coreboot-src
-        run: make -j$(nproc) IGNORE_CROSSGCC=1
+        run: make -j$(nproc)
 
       - name: Boot coreboot in QEMU
         run: |
