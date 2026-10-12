@@ -23,7 +23,7 @@ jobs:
       - name: Configure (QEMU i440fx)
         working-directory: coreboot-src
         run: |
-          cp configs/config.emulation_qemu_i440fx .config
+          cp configs/config.emulation_qemu_x86_i440fx .config
           make olddefconfig
 
       - name: Build coreboot
