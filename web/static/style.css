@@ -1,0 +1,25 @@
+:root { --bg:#f4f6fb; --panel:#ffffff; --brand:#0f4c81; --brand2:#e8750a; --text:#1f2937; --muted:#6b7280; --line:#e5e7eb; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: var(--bg); color: var(--text); }
+header { background: linear-gradient(135deg, var(--brand), #083358); color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.logo { font-size: 20px; font-weight: 700; }
+.logo .sub { font-size: 12px; color: #cbd5e1; margin-left: 8px; font-weight: 400; }
+nav { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+.tab { background: rgba(255,255,255,.12); border: none; color: #fff; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.tab.active { background: var(--brand2); }
+main { padding: 24px 28px; max-width: 1200px; margin: 0 auto; }
+.view { display: none; }
+.view.active { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.view:has(.panel:only-child) { grid-template-columns: 1fr; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+h3 { font-size: 15px; margin-bottom: 12px; color: var(--brand); }
+label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+input, select, textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 10px; font-size: 13px; }
+button { background: var(--brand); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-right: 6px; }
+button.ghost { background: transparent; color: var(--brand); border: 1px solid var(--brand); }
+.result { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 14px; font-size: 12px; margin-top: 12px; overflow: auto; max-height: 480px; white-space: pre-wrap; word-break: break-all; }
+.hidden { display: none; }
+.card { background: #f9fafb; border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+.card b { color: var(--brand); }
+.hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.cards { display: grid; grid-template-columns: 1fr; gap: 10px; }

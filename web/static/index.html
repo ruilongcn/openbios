@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>固件（BIOS/AI BIOS）智能体团队</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div class="logo">固件智能体团队 <span class="sub">BIOS / AI BIOS · 自主可控</span></div>
+  <nav>
+    <button class="tab active" data-view="boot">启动流程</button>
+    <button class="tab" data-view="security">固件安全</button>
+    <button class="tab" data-view="aibios">AI BIOS</button>
+    <button class="tab" data-view="board">主板适配</button>
+    <button class="tab" data-view="pl">流水线</button>
+    <button class="tab" data-view="sys">系统</button>
+  </nav>
+</header>
+
+<main>
+  <!-- 启动流程 -->
+  <section id="view-boot" class="view active">
+    <div class="panel">
+      <h3>固件启动流程分析（POST / UEFI / OpenFirmware）</h3>
+      <label>固件类型 <select id="bootType"><option value="UEFI">UEFI</option><option value="OpenFirmware">OpenFirmware</option></select></label>
+      <button onclick="bootAnalyze()">分析启动流程</button>
+      <button class="ghost" onclick="bootPost()">生成 POST 自检清单</button>
+      <pre id="bootResult" class="result hidden"></pre>
+    </div>
+    <div class="panel">
+      <h3>启动流程能力说明</h3>
+      <div class="card"><b>boot_flow</b><div class="hint">POST 上电自检、UEFI 四阶段（SEC/PEI/DXE/BDS）、OpenFirmware 对照、启动卡点诊断</div></div>
+    </div>
+  </section>
+
+  <!-- 固件安全 -->
+  <section id="view-security" class="view">
+    <div class="panel">
+      <h3>固件安全策略</h3>
+      <button onclick="secBoot()">生成 Secure Boot 策略</button>
+      <button class="ghost" onclick="secChain()">供应链投毒防护</button>
+      <pre id="secResult" class="result hidden"></pre>
+    </div>
+    <div class="panel">
+      <h3>固件安全能力说明</h3>
+      <div class="card"><b>firmware_security</b><div class="hint">Secure Boot 签名链、密钥管理、固件签名、防供应链投毒清单</div></div>
+    </div>
+  </section>
+
+  <!-- AI BIOS -->
+  <section id="view-aibios" class="view">
+    <div class="panel">
+      <h3>AI BIOS 智能诊断</h3>
+      <label>症状（逗号分隔）<input id="diagSymptom" placeholder="开机黑屏,启动缓慢"></label>
+      <button onclick="aiDiag()">执行诊断</button>
+      <button class="ghost" onclick="aiAdaptive()">自适应配置建议</button>
+      <pre id="aiResult" class="result hidden"></pre>
+    </div>
+    <div class="panel">
+      <h3>AI BIOS 能力说明</h3>
+      <div class="card"><b>ai_bios</b><div class="hint">固件智能诊断、启动异常分析、自适应配置（负载→功耗/风扇/启动策略）</div></div>
+    </div>
+  </section>
+
+  <!-- 主板适配 -->
+  <section id="view-board" class="view">
+    <div class="panel">
+      <h3>主板适配规划</h3>
+      <label>主板型号 <input id="boardName" value="CN-ATX-B760"></label>
+      <button onclick="boardAdapt()">生成适配清单</button>
+      <pre id="boardResult" class="result hidden"></pre>
+    </div>
+    <div class="panel">
+      <h3>主板适配能力说明</h3>
+      <div class="card"><b>mainboard_adapt</b><div class="hint">芯片组/SuperIO/EC/时钟/GPIO/传感器适配、移植步骤与验证</div></div>
+    </div>
+  </section>
+
+  <!-- 流水线 -->
+  <section id="view-pl" class="view">
+    <div class="panel">
+      <h3>多智能体流水线编排</h3>
+      <label>目标描述 <input id="plGoal" placeholder="如：分析启动流程、评估固件安全并做主板适配"></label>
+      <button onclick="plRun()">运行流水线</button>
+      <pre id="plResult" class="result hidden"></pre>
+    </div>
+  </section>
+
+  <!-- 系统 -->
+  <section id="view-sys" class="view">
+    <div class="panel"><h3>系统健康</h3><pre id="sysHealth" class="result"></pre></div>
+    <div class="panel"><h3>智能体列表</h3><div id="sysCards" class="cards"></div></div>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>
