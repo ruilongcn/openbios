@@ -18,7 +18,7 @@ jobs:
             python3 gcc-multilib g++-multilib acpica-tools qemu-system-x86
 
       - name: Clone coreboot source
-        run: git clone --depth 1 https://github.com/coreboot/coreboot.git coreboot-src
+        run: git clone --depth 1 --branch 24.12 https://github.com/coreboot/coreboot.git coreboot-src
 
       - name: Configure (QEMU i440fx)
         working-directory: coreboot-src
